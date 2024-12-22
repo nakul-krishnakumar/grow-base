@@ -1,7 +1,12 @@
 export default function Home() {
   return (
     <>
-      <h1 className="text-5xl text-center">Home Page</h1>
+      <section className="green_container">
+        <h1 className="heading">
+          <span>Nurturing the Next Big Thing.</span><br/>
+          <span> Directory for emerging startups</span>
+        </h1>
+      </section>
     </>
   );
 }
