@@ -42,6 +42,7 @@ const StartupCard = ({ post }: { post: StartupCardType }) => {
                     {description}
                 </p>
 
+                {/* eslint-disable-next-line @next/next/no-img-element */}            
                 <img src={image} alt="placeholder" className="startup-card_img" />
             </Link>
 
