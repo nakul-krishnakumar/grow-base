@@ -1,5 +1,7 @@
 import StartupCard from "@/components/StartupCard";
 import SearchForm from "../../components/SearchForm";
+import { STARTUPS_QUERY } from "@/sanity/lib/queries";
+import { sanityFetch, SanityLive } from "@/sanity/lib/live";
 
 export interface StartupCardType {
     _createdAt: Date,
@@ -21,19 +23,10 @@ export default async function Home({
     searchParams: Promise<{ query?: string }>;
 }) {
     const query = (await searchParams).query;
+    
+    const params = { search: query || null };
+    const {data: posts}: {data: StartupCardType[]} = await sanityFetch({ query: STARTUPS_QUERY, params});
 
-    const posts: StartupCardType[] = [
-        {
-            _createdAt : new Date(),
-            views: 55,
-            author: { _id : 1, name: "Nakul"},
-            _id: 1,
-            description: "This is a description",
-            image: "https://images.unsplash.com/photo-1719937206255-cc337bccfc7d?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-            category: "Robots",
-            title: "We Robots",
-        }
-    ]
     return (
         <>
             <section className="green_container">
@@ -65,6 +58,8 @@ export default async function Home({
                     )}
                 </ul>
             </section>
+
+            <SanityLive />
         </>
     );
 }
