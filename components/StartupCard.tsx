@@ -1,4 +1,4 @@
-import { StartupCardType } from "@/app/(root)/page";
+import { StartupCardType } from "@/types/StartUpCardType";
 import { formatDate } from "@/lib/utils";
 import { EyeIcon } from "lucide-react";
 import Image from "next/image";

@@ -2,20 +2,7 @@ import StartupCard from "@/components/StartupCard";
 import SearchForm from "../../components/SearchForm";
 import { STARTUPS_QUERY } from "@/sanity/lib/queries";
 import { sanityFetch, SanityLive } from "@/sanity/lib/live";
-
-export interface StartupCardType {
-    _createdAt: Date,
-    views: number,
-    author: {
-        _id: number,
-        name: string
-    }
-    _id: number,
-    description: string,
-    image: string,
-    category: string,
-    title: string
-}
+import { StartupCardType } from "@/types/StartUpCardType";
 
 export default async function Home({
     searchParams,
