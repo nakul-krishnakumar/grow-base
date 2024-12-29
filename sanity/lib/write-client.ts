@@ -9,7 +9,7 @@ export const writeClient = createClient({
   dataset,
   apiVersion,
   useCdn: false, // Set to false if statically generating pages, using ISR or tag-based revalidation
-  token,
+  token, //write token we generate from our sanity project page
 })
 
 if(!writeClient.config().token) {
