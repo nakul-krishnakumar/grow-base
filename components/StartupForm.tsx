@@ -1,29 +1,36 @@
 "use client"
 
 import { useActionState, useState } from "react";
+import { useRouter } from "next/navigation";
 import { Input } from "./ui/input";
 import { Textarea } from "./ui/textarea";
 import { Button } from "./ui/button";
 import { Send } from "lucide-react";
 import { formSchema } from "@/lib/validation";
-import dynamic from 'next/dynamic';
+// import dynamic from 'next/dynamic';
 import { z } from "zod";
 import { useToast } from "@/hooks/use-toast";
-// import { useRouter } from "next/router";
+import { createPitch } from "@/lib/actions";
+import MDEditor from '@uiw/react-md-editor';
 
-const MDEditor = dynamic(
-  () => import('@uiw/react-md-editor').then((mod) => mod.default),
-  { ssr: false } // This ensures the component only renders on client-side
-);
+// const MDEditor = dynamic(
+//   () => import('@uiw/react-md-editor').then((mod) => mod.default),
+//   { ssr: false } // This ensures the component only renders on client-side
+// );
 
 const StartupForm = () => {
     const [errors, setErrors] = useState<Record<string, string>>({});
     const [pitch, setPitch] = useState("");
 
     const { toast } = useToast();
-    // const router = useRouter();
+    const router = useRouter();
 
-    const handleFormSubmit = async (prevState: any, formData: FormData) => {
+    interface FormState {
+        error: string;
+        status: string;
+    }
+
+    const handleFormSubmit = async (prevState: FormState, formData: FormData) => {
         try {
             const formValues = {
                 title: formData.get("title") as string,
@@ -35,20 +42,19 @@ const StartupForm = () => {
 
             await formSchema.parseAsync(formValues);
             
-            console.log(formValues);
-            // const result = await createIdea(prevState, formData, pitch);
+            const result = await createPitch(prevState, formData, pitch);
 
-            // if (result.status == 'SUCCESS') {
-            //     toast({
-            //         title: 'Success',
-            //         description: 'Your startup pitch has been created successfully',
-            //         variant: 'destructive',
-            //     })
+            if (result.status == 'SUCCESS') {
+                toast({
+                    title: 'Success',
+                    description: 'Your startup pitch has been created successfully',
+                    variant: 'destructive',
+                })
 
-            //     router.push(`/startup/${result.id}`);
-            // }
+                router.push(`/startup/${result?._id}`);
+            }
 
-            // return result;
+            return result;
 
         } catch (error) {
             if (error instanceof z.ZodError) {
@@ -77,7 +83,7 @@ const StartupForm = () => {
         }
     }
 
-    const [state, formAction, isPending] = useActionState(
+    const [, formAction, isPending] = useActionState(
         handleFormSubmit, {
             error: "",
             status: "INITIAL",

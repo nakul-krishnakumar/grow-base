@@ -45,5 +45,8 @@ export const startup = defineType({
             // 'markdown' custom type and requires a module sanity-plugin-markdown, 
             // install it and add it to sanity.config.ts
         }),
-    ]
+    ],
+    initialValue: {
+        views: 0,
+    }
 })

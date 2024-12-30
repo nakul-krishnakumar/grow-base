@@ -18,3 +18,7 @@ export function formatView(views: number) {
     return "View"
   } else return "Views";
 } 
+
+export function parseServerActionResponse<T>(response: T) {
+  return JSON.parse(JSON.stringify(response));
+}
