@@ -1,6 +1,9 @@
 import { Suspense } from "react";
 import { StartupCardType } from "@/types/StartUpCardType";
-import { PLAYLIST_BY_SLUG_QUERY, STARTUP_BY_ID_QUERY } from "@/sanity/lib/queries";
+import {
+    PLAYLIST_BY_SLUG_QUERY,
+    STARTUP_BY_ID_QUERY,
+} from "@/sanity/lib/queries";
 import { client } from "@/sanity/lib/client";
 import { notFound } from "next/navigation";
 import { formatDate } from "@/lib/utils";
@@ -8,23 +11,26 @@ import Link from "next/link";
 import Image from "next/image";
 import { Skeleton } from "@/components/ui/skeleton";
 import View from "@/components/View";
+import StartupCard from "@/components/StartupCard";
+import { auth } from "@/auth";
 
 import markdownit from "markdown-it";
-import StartupCard from "@/components/StartupCard";
+import StartupActions from "@/components/ServerActions";
 const md = markdownit();
 
 const StartupPage = async ({ params }: { params: Promise<{ id: string }> }) => {
     const id = (await params)?.id;
+    const session = await auth();
 
     // Parellel Fetching to reduce total fetch time
-    const [post,{select: editorPosts}] = await Promise.all([
-        client.fetch(STARTUP_BY_ID_QUERY, {id,}),
-        client.fetch(PLAYLIST_BY_SLUG_QUERY, {slug: "editor-picks"})
-    ])
-
+    const [post, { select: editorPosts }] = await Promise.all([
+        client.fetch(STARTUP_BY_ID_QUERY, { id }),
+        client.fetch(PLAYLIST_BY_SLUG_QUERY, { slug: "editor-picks" }),
+    ]);
     if (!post) return notFound();
 
     const parsedPitch = md.render(post?.pitch || " ");
+
     return (
         <>
             <section className="green_container !min-h-[230px]">
@@ -80,19 +86,28 @@ const StartupPage = async ({ params }: { params: Promise<{ id: string }> }) => {
                     ) : (
                         <p className="no-result">No details provided</p>
                     )}
+
+                    {post.author._id == session?.id && (
+                        <StartupActions
+                            postId={post._id}
+                            isHidden={post.isHidden}
+                        />
+                    )}
                 </div>
 
                 <hr className="divider" />
-                
+
                 {editorPosts?.length > 0 && (
                     <div className="max-w-4xl mx-auto">
                         <p className="text-30-semibold">Editor Picks</p>
 
                         <ul className="mt-7 card_grid-sm">
-                            {editorPosts.map((post: StartupCardType, index: number) => (
-                                <StartupCard key={index} post={post}/>
-                            ))}
-                        </ul> 
+                            {editorPosts.map(
+                                (post: StartupCardType, index: number) => (
+                                    <StartupCard key={index} post={post} />
+                                )
+                            )}
+                        </ul>
                     </div>
                 )}
 

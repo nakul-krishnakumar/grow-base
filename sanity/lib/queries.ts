@@ -92,3 +92,5 @@ export const PLAYLIST_BY_SLUG_QUERY =
     pitch
   }
 }`);
+
+export const MATCH_STARTUP_BY_ID_QUERY = defineQuery(`*[_type == "startup" && _id ==$_id]`);

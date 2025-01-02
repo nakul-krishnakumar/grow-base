@@ -23,7 +23,8 @@ export const startup = defineType({
         }),
         defineField({
             name: 'views',
-            type: 'number'
+            type: 'number',
+            initialValue: 0
         }),
         defineField({
             name: 'description',
@@ -45,8 +46,10 @@ export const startup = defineType({
             // 'markdown' custom type and requires a module sanity-plugin-markdown, 
             // install it and add it to sanity.config.ts
         }),
-    ],
-    initialValue: {
-        views: 0,
-    }
+        defineField({
+            name: 'isHidden',
+            type: 'boolean',
+            initialValue: false
+        })
+    ]
 })

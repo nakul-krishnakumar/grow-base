@@ -198,6 +198,18 @@
         @apply font-medium text-[16px] bg-primary-100 px-4 py-2 rounded-full;
     }
 
+    .delete-btn {
+        @apply flex gap-1 justify-center items-center font-medium text-[14px] bg-red-500 px-4 py-1.5 rounded-full hover:bg-red-700 hover:text-white-100;
+    }
+
+    .show-btn {
+        @apply flex gap-1 justify-center items-center font-medium text-[14px] bg-black px-4 py-1.5 rounded-full hover:bg-slate-400 hover:text-white-100;
+    }
+
+    .hide-btn {
+        @apply flex gap-1 justify-center items-center font-medium text-[14px] bg-slate-400 px-4 py-1.5 rounded-full hover:bg-black hover:text-white-100;
+    }
+
     .pattern {
         background-image: linear-gradient(
                 to right,
