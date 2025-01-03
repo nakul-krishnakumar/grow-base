@@ -11,7 +11,8 @@ export const STARTUPS_QUERY = defineQuery(`*[_type == "startup" && defined(slug.
   views, 
   description, 
   category, 
-  image
+  image,
+  isHidden,
 }`)
 
 export const STARTUP_BY_ID_QUERY = defineQuery(`*[_type == "startup" && _id==$id][0] {
@@ -27,6 +28,7 @@ export const STARTUP_BY_ID_QUERY = defineQuery(`*[_type == "startup" && _id==$id
   category, 
   image,
   pitch,
+  isHidden,
 }`)
 
 export const STARTUP_VIEWS_QUERY = defineQuery(`*[_type == "startup" && _id==$id][0] {
@@ -66,6 +68,7 @@ export const STARTUPS_BY_AUTHOR_QUERY = defineQuery(`*[_type == "startup" && aut
   category, 
   image,
   pitch,
+  isHidden,
 }`)
 
 export const PLAYLIST_BY_SLUG_QUERY =
@@ -89,7 +92,8 @@ export const PLAYLIST_BY_SLUG_QUERY =
     description,
     category,
     image,
-    pitch
+    pitch,
+    isHidden
   }
 }`);
 

@@ -40,6 +40,7 @@ export default async function Home({
                 <ul className="mt-7 card_grid">
                     { posts?.length > 0 ? (
                         posts.map((post: StartupCardType) => (
+                            !post.isHidden &&
                             <StartupCard key={post._id} post={post}/>
                         ))
                     ) : (

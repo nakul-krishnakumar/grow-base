@@ -13,4 +13,5 @@ export interface StartupCardType {
     category: string,
     title: string,
     pitch?: string,
+    isHidden: boolean
 }

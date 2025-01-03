@@ -203,7 +203,7 @@
     }
 
     .show-btn {
-        @apply flex gap-1 justify-center items-center font-medium text-[14px] bg-black px-4 py-1.5 rounded-full hover:bg-slate-400 hover:text-white-100;
+        @apply flex gap-1 justify-center items-center font-medium text-[14px] text-white-100 bg-black px-4 py-1.5 rounded-full hover:bg-slate-400 hover:text-white-100;
     }
 
     .hide-btn {

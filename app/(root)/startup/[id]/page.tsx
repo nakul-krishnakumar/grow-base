@@ -15,7 +15,7 @@ import StartupCard from "@/components/StartupCard";
 import { auth } from "@/auth";
 
 import markdownit from "markdown-it";
-import StartupActions from "@/components/ServerActions";
+import StartupActions from "@/components/StartupActions";
 const md = markdownit();
 
 const StartupPage = async ({ params }: { params: Promise<{ id: string }> }) => {
@@ -28,6 +28,8 @@ const StartupPage = async ({ params }: { params: Promise<{ id: string }> }) => {
         client.fetch(PLAYLIST_BY_SLUG_QUERY, { slug: "editor-picks" }),
     ]);
     if (!post) return notFound();
+
+    if (post.author._id != session?.id && post.isHidden) return notFound();
 
     const parsedPitch = md.render(post?.pitch || " ");
 
