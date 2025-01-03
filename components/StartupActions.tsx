@@ -2,16 +2,18 @@
 
 import { toast } from "@/hooks/use-toast";
 import toggleVisibility from "@/lib/toggleVisibility";
-import { Eye, EyeOff, Trash2 } from "lucide-react";
+import { Eye, EyeOff } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { DeleteButton } from "./DeleteDialogBox";
 
 interface StartupActionsProps {
-    postId: string;
-    isHidden: boolean;
+    postId: string,
+    isHidden: boolean,
+    postTitle: string,
 }
 
-const StartupActions = ({ postId, isHidden: initialIsHidden }: StartupActionsProps) => {
+const StartupActions = ({ postId, isHidden: initialIsHidden, postTitle }: StartupActionsProps) => {
     const router = useRouter();
     const [isHidden, setIsHidden] = useState(initialIsHidden);
 
@@ -38,26 +40,25 @@ const StartupActions = ({ postId, isHidden: initialIsHidden }: StartupActionsPro
     };
 
     return (
-        <div className="flex justify-end gap-2">
-            <button className="delete-btn">
-                Delete
-                <Trash2 className="w-4" />
-            </button>
-            {isHidden ? (
-                <button
-                    className="show-btn"
-                    onClick={() => handleHidden(false)}
-                >
-                    Show
-                    <Eye className="w-4" />
-                </button>
-            ) : (
-                <button className="hide-btn" onClick={() => handleHidden(true)}>
-                    Hide
-                    <EyeOff className="w-4" />
-                </button>
-            )}
-        </div>
+        <>
+            <div className="flex justify-end gap-2">
+                <DeleteButton startupId={postId} startupTitle={postTitle} />
+                {isHidden ? (
+                    <button
+                        className="show-btn"
+                        onClick={() => handleHidden(false)}
+                    >
+                        Show
+                        <Eye className="w-4" />
+                    </button>
+                ) : (
+                    <button className="hide-btn" onClick={() => handleHidden(true)}>
+                        Hide
+                        <EyeOff className="w-4" />
+                    </button>
+                )}
+            </div>
+        </>
     );
 };
 

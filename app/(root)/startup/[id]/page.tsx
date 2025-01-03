@@ -23,12 +23,11 @@ const StartupPage = async ({ params }: { params: Promise<{ id: string }> }) => {
     const session = await auth();
 
     // Parellel Fetching to reduce total fetch time
-    const [post, { select: editorPosts }] = await Promise.all([
+    const [post, { select: editorPosts }]= await Promise.all([
         client.fetch(STARTUP_BY_ID_QUERY, { id }),
         client.fetch(PLAYLIST_BY_SLUG_QUERY, { slug: "editor-picks" }),
     ]);
     if (!post) return notFound();
-
     if (post.author._id != session?.id && post.isHidden) return notFound();
 
     const parsedPitch = md.render(post?.pitch || " ");
@@ -93,6 +92,7 @@ const StartupPage = async ({ params }: { params: Promise<{ id: string }> }) => {
                         <StartupActions
                             postId={post._id}
                             isHidden={post.isHidden}
+                            postTitle = {post.title}
                         />
                     )}
                 </div>
@@ -116,6 +116,7 @@ const StartupPage = async ({ params }: { params: Promise<{ id: string }> }) => {
                 <Suspense fallback={<Skeleton className="view_skeleton" />}>
                     <View id={id} />
                 </Suspense>
+
             </section>
         </>
     );

@@ -203,7 +203,7 @@
     }
 
     .delete-btn {
-        @apply flex gap-1 justify-center items-center font-medium text-[14px] bg-red-500 px-4 py-1.5 rounded-full hover:bg-red-700 hover:text-white-100;
+        @apply flex gap-1 justify-center items-center font-medium text-[14px] bg-red-500 px-4 py-1.5 rounded-full hover:bg-red-700 hover:text-white-100 disabled:pointer-events-none disabled:opacity-50;
     }
 
     .show-btn {
